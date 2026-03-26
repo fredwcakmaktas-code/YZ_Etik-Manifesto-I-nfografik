@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YAZEK · Yapay Zeka Etik Manifestosu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --ink: #0a1628;
+  --gold: #c9a84c;
+  --fog: #f5f0e8;
+  --white: #ffffff;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--ink);
+  color: var(--white);
+}
+
+/* TOP STRIP */
+.topstrip {
+  background: var(--gold);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 40px;
+}
+.topstrip-left {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink);
+}
+.topstrip-right {
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--ink); opacity: 0.65;
+}
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 340px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -55deg, transparent 0, transparent 38px,
+    rgba(201,168,76,0.04) 38px, rgba(201,168,76,0.04) 39px
+  );
+  pointer-events: none;
+}
+.hero-left {
+  padding: 60px 50px 52px 52px;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 4.5vw, 64px);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: -1px; margin-bottom: 18px;
+}
+.hero-title em { font-style: italic; color: var(--gold); display: block; }
+.hero-tagline {
+  font-size: 14px; color: rgba(255,255,255,0.4);
+  font-style: italic; letter-spacing: 1.5px; margin-bottom: 32px;
+}
+.hero-core {
+  background: rgba(201,168,76,0.1);
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px; max-width: 480px;
+  border-radius: 0 6px 6px 0;
+}
+.hero-core p {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px; font-style: italic;
+  line-height: 1.7; color: rgba(255,255,255,0.82);
+}
+.hero-right {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-emblem {
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative;
+}
+.emblem-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 90px; font-weight: 900;
+  color: var(--gold); line-height: 1;
+}
+.emblem-label {
+  font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-top: 4px;
+}
+
+/* PRINCIPLES BAND */
+.principles-band { background: var(--fog); }
+.band-header {
+  background: var(--ink);
+  display: flex; align-items: center;
+  gap: 18px; padding: 18px 52px;
+  border-bottom: 2px solid var(--gold);
+}
+.band-tag {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase;
+  background: var(--gold); color: var(--ink);
+  padding: 5px 12px; border-radius: 3px;
+}
+.band-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; color: var(--white);
+}
+.principles-flow {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  min-height: 220px;
+}
+.p-cell {
+  padding: 28px 18px 24px;
+  border-right: 1px solid rgba(10,22,40,0.1);
+  display: flex; flex-direction: column; gap: 8px;
+  color: var(--ink); position: relative; overflow: hidden;
+  cursor: default; transition: background 0.2s, color 0.2s;
+}
+.p-cell:last-child { border-right: none; }
+.p-cell:hover { background: var(--ink); }
+.p-cell:hover .p-title { color: var(--gold); }
+.p-cell:hover .p-desc { color: rgba(255,255,255,0.6); }
+.p-cell:hover .p-num { color: rgba(201,168,76,0.2); }
+.p-cell:hover .p-icon { background: rgba(201,168,76,0.15); }
+.p-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 900; line-height: 1;
+  color: rgba(10,22,40,0.07);
+  position: absolute; top: 10px; right: 12px;
+  transition: color 0.2s;
+}
+.p-icon {
+  width: 50px; height: 50px;
+  background: rgba(10,22,40,0.06);
+  border-radius: 10px; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+  transition: background 0.2s; margin-bottom: 2px;
+}
+.p-bar {
+  width: 28px; height: 2px;
+  background: var(--gold); border-radius: 2px; margin-bottom: 2px;
+}
+.p-title {
+  font-size: 18px; font-weight: 700;
+  line-height: 1.35; color: var(--ink); transition: color 0.2s;
+}
+.p-desc {
+  font-size: 16px; color: rgba(10,22,40,0.55);
+  line-height: 1.55; transition: color 0.2s;
+}
+
+/* MIDDLE ROW */
+.middle-row {
+  display: grid; grid-template-columns: 1fr 1fr; min-height: 200px;
+}
+.sec-label {
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+}
+
+/* Beyan */
+.beyan-section {
+  background: var(--ink);
+  border-right: 1px solid rgba(201,168,76,0.2);
+  padding: 36px 48px;
+}
+.beyan-cards { display: flex; gap: 14px; }
+.beyan-card {
+  flex: 1; border-radius: 10px;
+  padding: 20px 14px; text-align: center;
+}
+.bc0 { background: rgba(45,106,79,0.18);  border: 1px solid rgba(45,106,79,0.5); }
+.bck { background: rgba(29,106,106,0.18); border: 1px solid rgba(29,106,106,0.5); }
+.bcy { background: rgba(27,79,114,0.18);  border: 1px solid rgba(27,79,114,0.5); }
+.b-code {
+  font-family: 'Playfair Display', serif;
+  font-size: 47px; font-weight: 900; line-height: 1; margin-bottom: 8px;
+}
+.bc0 .b-code { color: #5dbb8c; }
+.bck .b-code { color: #5dd1d1; }
+.bcy .b-code { color: #6eb5e8; }
+.b-name {
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-bottom: 8px;
+}
+.b-text { font-size: 17px; color: rgba(255,255,255,0.58); line-height: 1.5; }
+
+/* Vizyon */
+.vizyon-section {
+  background: var(--gold); padding: 36px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.vizyon-section .sec-label { color: var(--ink); opacity: 0.55; }
+.vizyon-pillars { display: flex; gap: 10px; }
+.v-pill {
+  flex: 1; background: rgba(10,22,40,0.1);
+  border-radius: 8px; padding: 14px 10px;
+  text-align: center; font-size: 16px;
+  font-weight: 600; color: var(--ink); line-height: 1.4;
+}
+.v-pill strong { display: block; font-size: 34px; margin-bottom: 4px; }
+
+/* STAKEHOLDER ROW */
+.stakeholder-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid rgba(201,168,76,0.3);
+}
+.s-cell {
+  padding: 30px 26px;
+  border-right: 1px solid rgba(201,168,76,0.12);
+  background: #0f1f3d;
+}
+.s-cell:last-child { border-right: none; }
+.s-emoji { font-size: 44px; margin-bottom: 10px; display: block; }
+.s-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 25px; font-weight: 700;
+  color: var(--gold); margin-bottom: 12px;
+}
+.s-items { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.s-items li {
+  font-size: 18px; color: rgba(255,255,255,0.6);
+  line-height: 1.5; display: flex; gap: 8px;
+}
+.s-items li::before {
+  content: '›'; color: var(--gold);
+  flex-shrink: 0; font-weight: 700;
+  font-size: 14px; line-height: 1.3;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--gold); padding: 20px 52px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.footer-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-style: italic; font-weight: 700;
+  color: var(--ink); max-width: 640px; line-height: 1.5;
+}
+.footer-seal { text-align: right; flex-shrink: 0; }
+.footer-seal .school {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink); opacity: 0.65;
+}
+.footer-seal .commission {
+  font-size: 11px; font-weight: 600; color: var(--ink); margin-top: 2px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .principles-flow { grid-template-columns: repeat(4, 1fr); }
+  .p-cell:nth-child(4n) { border-right: none; }
+  .p-cell:nth-child(n+5) { border-top: 1px solid rgba(10,22,40,0.1); }
+  .middle-row { grid-template-columns: 1fr; }
+  .stakeholder-row { grid-template-columns: repeat(2, 1fr); }
+  .s-cell:nth-child(even) { border-right: none; }
+  .s-cell:nth-child(n+3) { border-top: 1px solid rgba(201,168,76,0.12); }
+  .band-header { padding: 16px 24px; }
+  .hero-left { padding: 40px 28px; }
+  .beyan-section, .vizyon-section { padding: 28px; }
+}
+@media (max-width: 580px) {
+  .principles-flow { grid-template-columns: repeat(2, 1fr); }
+  .stakeholder-row { grid-template-columns: 1fr; }
+  .s-cell:nth-child(even) { border-right: none; }
+  .beyan-cards { flex-direction: column; }
+  .vizyon-pillars { flex-wrap: wrap; }
+  .topstrip { padding: 8px 20px; }
+  .footer { padding: 18px 24px; flex-direction: column; align-items: flex-start; }
+}
+
+/* LANGUAGE TOGGLE */
+.lang-toggle {
+  display: flex; gap: 6px; align-items: center;
+}
+.lang-btn {
+  background: rgba(10,22,40,0.2); border: 1px solid rgba(10,22,40,0.4);
+  color: var(--ink); font-size: 11px; font-weight: 600;
+  padding: 6px 12px; border-radius: 4px; cursor: pointer;
+  transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;
+}
+.lang-btn.active {
+  background: var(--ink); color: var(--gold); border-color: var(--ink);
+}
+.lang-btn:hover {
+  border-color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<div class="topstrip">
+  <div class="topstrip-left" data-key="topstrip-school-tr">İstanbul Özel Saint-Joseph Fransız Lisesi</div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="tr">TR</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+  </div>
+  <div class="topstrip-right">YAZEK · V6 · 2025–2027</div>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow" data-key="hero-eyebrow">Yapay Zeka Etik Komisyonu</div>
+    <h1 class="hero-title"><span data-key="hero-title-main">Yapay Zeka</span><em data-key="hero-title-em">Etik Manifestosu</em></h1>
+    <p class="hero-tagline" data-key="hero-tagline">— Araç değişir; değerler kalır. —</p>
+    <div class="hero-core">
+      <p data-key="hero-core-text">"Eğitime dair hiçbir karar bir makineye bırakılmaz; yapay zeka ise daima insanın hizmetindeki bir araç olarak kalır."</p>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-emblem">
+      <img src="images/SJ Logo 01.png" alt="Saint-Joseph Logo" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+  </div>
+</section>
+
+<section class="principles-band">
+  <div class="band-header">
+    <span class="band-tag" data-key="band-tag">Temel İlkeler</span>
+    <h2 data-key="band-header-h2">Her biri "tüm paydaşlar için" bağlayıcıdır.</h2>
+  </div>
+  <div class="principles-flow">
+    <div class="p-cell">
+      <div class="p-num">1</div>
+      <div class="p-icon">👤</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-1">İnsan Merkezlilik</div>
+      <p class="p-desc" data-key="p-desc-1">Teknoloji insanı güçlendirir, ikame etmez.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">2</div>
+      <div class="p-icon">✍️</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-2">Akademik Dürüstlük</div>
+      <p class="p-desc" data-key="p-desc-2">YZ çıktısı içselleştirilmeden sunulamaz.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">3</div>
+      <div class="p-icon">🔍</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-3">Şeffaflık</div>
+      <p class="p-desc" data-key="p-desc-3">Her YZ kullanımı açıkça beyan edilir.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">4</div>
+      <div class="p-icon">⚖️</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-4">Eşitlik & Adalet</div>
+      <p class="p-desc" data-key="p-desc-4">Teknoloji fırsat eşitsizliği üretemez.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">5</div>
+      <div class="p-icon">🧠</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-5">Eleştirel Düşünce</div>
+      <p class="p-desc" data-key="p-desc-5">Algoritmik çıktı sorgulanmadan kabul edilemez.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">6</div>
+      <div class="p-icon">🔒</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-6">Veri Mahremiyeti</div>
+      <p class="p-desc" data-key="p-desc-6">Kişisel veriler korunmaya değerdir.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">7</div>
+      <div class="p-icon">🌱</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-7">Dijital Ekoloji</div>
+      <p class="p-desc" data-key="p-desc-7">Bilinçli kullanım bir etik zorunluluktur.</p>
+    </div>
+    <div class="p-cell">
+      <div class="p-num">8</div>
+      <div class="p-icon">🎓</div>
+      <div class="p-bar"></div>
+      <div class="p-title" data-key="p-title-8">Pedagojik Yargı</div>
+      <p class="p-desc" data-key="p-desc-8">Son söz daima insana aittir.</p>
+    </div>
+  </div>
+</section>
+
+<div class="middle-row">
+  <div class="beyan-section">
+    <div class="sec-label" data-key="beyan-label">Beyan Yükümlülüğü — Tüm Üyeler İçin Zorunlu</div>
+    <div class="beyan-cards">
+      <div class="beyan-card bc0">
+        <div class="b-code" data-key="beyan-code-1">0YZ</div>
+        <div class="b-name" data-key="beyan-name-1">Sıfır Yapay Zeka</div>
+        <p class="b-text" data-key="beyan-text-1">Tüm içerik tamamen bağımsız üretilmiştir.</p>
+      </div>
+      <div class="beyan-card bck">
+        <div class="b-code" data-key="beyan-code-2">KYZ</div>
+        <div class="b-name" data-key="beyan-name-2">Kısmen Yapay Zeka</div>
+        <p class="b-text" data-key="beyan-text-2">YZ'den yararlanılmış; içerik kişisel katkıyla dönüştürülmüştür.</p>
+      </div>
+      <div class="beyan-card bcy">
+        <div class="b-code" data-key="beyan-code-3">YZ</div>
+        <div class="b-name" data-key="beyan-name-3">Yapay Zeka</div>
+        <p class="b-text" data-key="beyan-text-3">YZ belirgin biçimde kullanılmış; beyan edilmiştir.</p>
+      </div>
+    </div>
+  </div>
+  <div class="vizyon-section">
+    <div class="sec-label" data-key="vizyon-label">Kurumsal Vizyon</div>
+    <div class="vizyon-pillars">
+      <div class="v-pill" data-key="vizyon-pill-1"><strong>🚫</strong>Bağımlı<br>Değil</div>
+      <div class="v-pill" data-key="vizyon-pill-2"><strong>✅</strong>Yöneten<br>Birey</div>
+      <div class="v-pill" data-key="vizyon-pill-3"><strong>❏</strong>Sorgulayan<br>Öğrenci</div>
+      <div class="v-pill" data-key="vizyon-pill-4"><strong>∞️</strong>İnsanı Merkeze<br>Alan Pedagoji</div>
+    </div>
+  </div>
+</div>
+
+<div class="stakeholder-row">
+  <div class="s-cell">
+    <span class="s-emoji">🎒</span>
+    <div class="s-title" data-key="s-title-1">Öğrenciler</div>
+    <ul class="s-items">
+      <li data-key="s-text-1-1">YZ'yı yalnızca destekleyici araç olarak kullanır.</li>
+      <li data-key="s-text-1-2">Her kullanımı şeffaf biçimde beyan eder.</li>
+      <li data-key="s-text-1-3">Çıktıları sorgular ve doğrular.</li>
+      <li data-key="s-text-1-4">Akademik dürüstlüğü içselleştir.</li>
+    </ul>
+  </div>
+  <div class="s-cell">
+    <span class="s-emoji">📚</span>
+    <div class="s-title" data-key="s-title-2">Öğretmenler</div>
+    <ul class="s-items">
+      <li data-key="s-text-2-1">Pedagojik özerkliğini korur.</li>
+      <li data-key="s-text-2-2">Çalışmaya özgü sınırları tanımlar.</li>
+      <li data-key="s-text-2-3">Süreç odaklı değerlendirme uygular.</li>
+      <li data-key="s-text-2-4">İnsan merkezli rehberliği ön planda tutar.</li>
+    </ul>
+  </div>
+  <div class="s-cell">
+    <span class="s-emoji">👨‍👩‍👧</span>
+    <div class="s-title" data-key="s-title-3">Veliler</div>
+    <ul class="s-items">
+      <li data-key="s-text-3-1">Çocuğun dijital ilişkisini eleştirel destekler.</li>
+      <li data-key="s-text-3-2">Kurumun politikalarını tanır ve anlar.</li>
+      <li data-key="s-text-3-3">Evde etik YZ kullanımına rehberlik eder.</li>
+      <li data-key="s-text-3-4">Sürece aktif ortak olarak dahil olur.</li>
+    </ul>
+  </div>
+  <div class="s-cell">
+    <span class="s-emoji">🏛️</span>
+    <div class="s-title" data-key="s-title-4">Okul Yönetimi</div>
+    <ul class="s-items">
+      <li data-key="s-text-4-1">Etik çerçeveyi tanımlar ve günceller.</li>
+      <li data-key="s-text-4-2">Veri güvenliğini güvence altına alır.</li>
+      <li data-key="s-text-4-3">Adil ve erişilebilir ortam oluşturur.</li>
+      <li data-key="s-text-4-4">Tüm paydaşları kararlara dahil eder.</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <p class="footer-quote" data-key="footer-quote">"Teknoloji zaman içinde farklılaşabilir; ancak etik duruşumuz, akademik hassasiyetimiz ve insan merkezli bakış açımız tavizsiz aynı kalır."</p>
+  <div class="footer-seal">
+    <div class="school" data-key="footer-school">İstanbul Özel Saint-Joseph Fransız Lisesi</div>
+    <div class="commission" data-key="footer-commission">YAZEK · Yapay Zeka Etik Komisyonu · 2025–2027</div>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  'topstrip-school-tr': { tr: 'İstanbul Özel Saint-Joseph Fransız Lisesi', fr: 'Lycée Français Privé Saint-Joseph d\'Istanbul' },
+  'hero-eyebrow': { tr: 'Yapay Zeka Etik Komisyonu', fr: 'Commission d\'Éthique de l\'IA' },
+  'hero-title-main': { tr: 'Yapay Zeka', fr: 'Manifeste' },
+  'hero-title-em': { tr: 'Etik Manifestosu', fr: 'd\'Éthique de l\'IA' },
+  'hero-tagline': { tr: '— Araç değişir; değerler kalır. —', fr: '— L\'outil change ; les valeurs demeurent. —' },
+  'hero-core-text': { tr: '"Eğitime dair hiçbir karar bir makineye bırakılmaz; yapay zeka ise daima insanın hizmetindeki bir araç olarak kalır."', fr: '"Aucune décision concernant l\'éducation n\'est confiée à une machine ; l\'IA reste toujours un outil au service de l\'humain."' },
+  'emblem-label': { tr: 'Temel İlke', fr: 'Principes Fondamentaux' },
+  'band-tag': { tr: 'Temel İlkeler', fr: 'Principes Fondamentaux' },
+  'band-header-h2': { tr: 'Her biri "tüm paydaşlar için" bağlayıcıdır.', fr: 'Chacun est contraignant — pour toutes les parties prenantes' },
+  
+  'p-title-1': { tr: 'İnsan Merkezlilik', fr: 'Centrage Humain' },
+  'p-desc-1': { tr: 'Teknoloji insanı güçlendirir, ikame etmez.', fr: 'La technologie renforce l\'humain, elle ne le remplace pas.' },
+  'p-title-2': { tr: 'Akademik Dürüstlük', fr: 'Intégrité Académique' },
+  'p-desc-2': { tr: 'YZ çıktısı içselleştirilmeden sunulamaz.', fr: 'La production d\'IA ne peut être présentée sans appropriation personnelle.' },
+  'p-title-3': { tr: 'Şeffaflık', fr: 'Transparence' },
+  'p-desc-3': { tr: 'Her YZ kullanımı açıkça beyan edilir.', fr: 'Toute utilisation d\'IA est clairement déclarée.' },
+  'p-title-4': { tr: 'Eşitlik & Adalet', fr: 'Équité & Justice' },
+  'p-desc-4': { tr: 'Teknoloji fırsat eşitsizliği üretemez.', fr: 'La technologie ne peut pas créer des inégalités d\'opportunités.' },
+  'p-title-5': { tr: 'Eleştirel Düşünce', fr: 'Pensée Critique' },
+  'p-desc-5': { tr: 'Algoritmik çıktı sorgulanmadan kabul edilemez.', fr: 'La production algorithmique ne peut pas être acceptée sans être remise en question.' },
+  'p-title-6': { tr: 'Veri Mahremiyeti', fr: 'Confidentialité des Données' },
+  'p-desc-6': { tr: 'Kişisel veriler korunmaya değerdir.', fr: 'Les données personnelles méritent d\'être protégées.' },
+  'p-title-7': { tr: 'Dijital Ekoloji', fr: 'Écologie Numérique' },
+  'p-desc-7': { tr: 'Bilinçli kullanım bir etik zorunluluktur.', fr: 'L\'utilisation consciente est une obligation éthique.' },
+  'p-title-8': { tr: 'Pedagojik Yargı', fr: 'Jugement Pédagogique' },
+  'p-desc-8': { tr: 'Son söz daima insana aittir.', fr: 'Le dernier mot appartient toujours à l\'humain.' },
+  
+  'beyan-label': { tr: 'Beyan Yükümlülüğü — Tüm Üyeler İçin Zorunlu', fr: 'Obligation de Déclaration — Obligatoire pour Tous les Membres' },
+  'beyan-code-1': { tr: '0YZ', fr: '0IA' },
+  'beyan-name-1': { tr: 'Sıfır Yapay Zeka', fr: 'Zéro IA' },
+  'beyan-text-1': { tr: 'Tüm içerik tamamen bağımsız üretilmiştir.', fr: 'Tout le contenu a été entièrement produit indépendamment.' },
+  'beyan-code-2': { tr: 'KYZ', fr: 'PIA' },
+  'beyan-name-2': { tr: 'Kısmen Yapay Zeka', fr: 'IA Partielle' },
+  'beyan-text-2': { tr: 'YZ\'den yararlanılmış; içerik kişisel katkıyla dönüştürülmüştür.', fr: 'L\'IA a été utilisée ; le contenu a été transformé par la contribution personnelle.' },
+  'beyan-code-3': { tr: 'YZ', fr: 'IA' },
+  'beyan-name-3': { tr: 'Yapay Zeka', fr: 'IA' },
+  'beyan-text-3': { tr: 'YZ belirgin biçimde kullanılmış; beyan edilmiştir.', fr: 'L\'IA a été utilisée de manière significative ; cela a été déclaré.' },
+  
+  'vizyon-label': { tr: 'Kurumsal Vizyon', fr: 'Vision Institutionnelle' },
+  'vizyon-pill-1': { tr: '🚫 Bağımlı Değil', fr: '🚫 Pas de Dépendance' },
+  'vizyon-pill-2': { tr: '✅ Yöneten Birey', fr: '✅ Individu Autonome' },
+  'vizyon-pill-3': { tr: '❓ Sorgulayan Öğrenci', fr: '❓ Étudiant Critique' },
+  'vizyon-pill-4': { tr: '♾️ İnsanı Merkeze alan Pedagoji', fr: '♾️ Pédagogie axée sur l\'humain' },
+  
+  's-title-1': { tr: 'Öğrenciler', fr: 'Étudiants' },
+  's-text-1-1': { tr: 'YZ\'yı yalnızca destekleyici araç olarak kullanır.', fr: 'Utilisent l\'IA uniquement comme outil d\'appui.' },
+  's-text-1-2': { tr: 'Her kullanımı şeffaf biçimde beyan eder.', fr: 'Déclarent clairement chaque utilisation.' },
+  's-text-1-3': { tr: 'Çıktıları sorgular ve doğrular.', fr: 'Remettent en question et vérifient les résultats.' },
+  's-text-1-4': { tr: 'Akademik dürüstlüğü içselleştir.', fr: 'S\'approprient l\'intégrité académique.' },
+  
+  's-title-2': { tr: 'Öğretmenler', fr: 'Enseignants' },
+  's-text-2-1': { tr: 'Pedagojik özerkliğini korur.', fr: 'Préservent leur autonomie pédagogique.' },
+  's-text-2-2': { tr: 'Çalışmaya özgü sınırları tanımlar.', fr: 'Définissent les limites spécifiques au travail.' },
+  's-text-2-3': { tr: 'Süreç odaklı değerlendirme uygular.', fr: 'Appliquent l\'évaluation centrée sur le processus.' },
+  's-text-2-4': { tr: 'İnsan merkezli rehberliği ön planda tutar.', fr: 'Mettent l\'accompagnement humain en avant.' },
+  
+  's-title-3': { tr: 'Veliler', fr: 'Parents' },
+  's-text-3-1': { tr: 'Çocuğun dijital ilişkisini eleştirel destekler.', fr: 'Soutiennent la relation numérique de l\'enfant de manière critique.' },
+  's-text-3-2': { tr: 'Kurumun politikalarını tanır ve anlar.', fr: 'Connaissent et comprennent les politiques de l\'institution.' },
+  's-text-3-3': { tr: 'Evde etik YZ kullanımına rehberlik eder.', fr: 'Orientent l\'utilisation éthique de l\'IA à la maison.' },
+  's-text-3-4': { tr: 'Sürece aktif ortak olarak dahil olur.', fr: 'Participent activement au processus.' },
+  
+  's-title-4': { tr: 'Okul Yönetimi', fr: 'Direction de l\'École' },
+  's-text-4-1': { tr: 'Etik çerçeveyi tanımlar ve günceller.', fr: 'Définit et met à jour le cadre éthique.' },
+  's-text-4-2': { tr: 'Veri güvenliğini güvence altına alır.', fr: 'Sécurise la protection des données.' },
+  's-text-4-3': { tr: 'Adil ve erişilebilir ortam oluşturur.', fr: 'Crée un environnement juste et accessible.' },
+  's-text-4-4': { tr: 'Tüm paydaşları kararlara dahil eder.', fr: 'Implique toutes les parties prenantes dans les décisions.' },
+  
+  'footer-quote': { tr: '"Teknoloji zaman içinde farklılaşabilir; ancak etik duruşumuz, akademik hassasiyetimiz ve insan merkezli bakış açımız tavizsiz aynı kalır."', fr: '"La technologie peut évoluer avec le temps ; cependant, notre position éthique, notre sensibilité académique et notre perspective centrée sur l\'humain restent inébranlablement identiques."' },
+  'footer-school': { tr: 'İstanbul Özel Saint-Joseph Fransız Lisesi', fr: 'Lycée Français Privé Saint-Joseph d\'Istanbul' },
+  'footer-commission': { tr: 'YAZEK · Yapay Zeka Etik Komisyonu · 2025–2027', fr: 'YAZEK · Commission d\'Éthique de l\'IA · 2025–2027' }
+};
+
+let currentLang = 'tr';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  
+  // Update all translatable elements
+  for (let key in translations) {
+    const element = document.querySelector(`[data-key="${key}"]`);
+    if (element) {
+      element.textContent = translations[key][lang];
+    }
+  }
+  
+  // Update active button
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  
+  // Save preference
+  localStorage.setItem('yazek-lang', lang);
+  
+  // Update HTML lang attribute
+  document.documentElement.lang = lang;
+}
+
+// Add event listeners to language buttons
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    setLanguage(btn.dataset.lang);
+  });
+});
+
+// Load saved preference or default to Turkish
+const savedLang = localStorage.getItem('yazek-lang') || 'tr';
+if (savedLang !== 'tr') {
+  setLanguage(savedLang);
+}
+</script>
+
+</body>
+</html>
